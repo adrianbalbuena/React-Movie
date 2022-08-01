@@ -1,12 +1,23 @@
+import { useEffect, useState } from 'react';
 import './PopularMovies.css';
+import { getPopularMovies } from './services/client';
 
 function PopularMovies() {
+  const [popularMovies, setPopularMovies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const titles = await getPopularMovies();
+      setPopularMovies(titles);
+    })();
+  }, []);
+
   return (
     <div className="container">
       <ul>
-        <li>Esta peicula tiene un titulo suuuuuuupper laaaaaargo</li>
-        <li>Pelicula 2 </li>
-        <li>Pelicula 3 </li>
+        {popularMovies.map((popularMovie) => (
+          <li>{popularMovie}</li>
+        ))}
       </ul>
     </div>
   );
